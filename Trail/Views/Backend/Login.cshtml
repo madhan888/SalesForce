@@ -1,0 +1,110 @@
+﻿
+@model ClassLibrary.Models.customer_master
+@{
+    ViewBag.Title = "Login";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XPay Life Bank Login</title>
+    <style>
+        .button11 {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        #form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="form-container">
+        <h1>XPay Life Bank</h1>
+        <br>
+
+        <h2>Welcome</h2>
+        <h2>@ViewBag.SuccessMessage</h2>
+        <h2>@ViewBag.ErrorMessage</h2>
+        <form action="" method="post">
+            @Html.LabelFor(m => m.customer_fname ,"Username")
+            @Html.TextBoxFor(m => m.customer_fname)
+            @Html.ValidationMessageFor(m => m.customer_fname)
+
+            @Html.LabelFor(m => m.login_password,"Password")
+            @Html.PasswordFor(m => m.login_password, new { required = "required" })
+            @Html.ValidationMessageFor(m => m.login_password)
+
+            
+            <div >
+
+                <button type="submit">Login</button>
+
+            </div>
+
+
+
+        </form>
+
+        <a href="@Url.Action("RegistrationPage","Backend")"><button>Register</button></a>
+        <a href="@Url.Action("PasswordReset","Backend")"><button>Forgot Password</button></a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+﻿@model ClassLibrary.Models.customer_master
+
+@{
+    ViewBag.Title = "RegistrationPage";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Reset</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select,
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            button[type="submit"] {
+                background-color: #008CBA;
+            }
+
+            button[type="button"] {
+                background-color: #f44336;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            .center{
+                margin-right:500px;
+            }
+    </style>
+</head>
+
+<body>
+    @using (Html.BeginForm("RegistrationPage", "Backend", FormMethod.Post, new { id = "form1" }))
+    {
+        <h1>XPay Life Bank</h1>
+        <br>
+
+        <h2>Welcome</h2>
+
+        <h2>@ViewBag.SucessMessage</h2>
+        <div>
+            <b>
+                @Html.LabelFor(m => m.customer_fname)
+                @Html.TextBoxFor(m => m.customer_fname, new { required = "required" })
+            </b>
+            <br>
+            <br>
+
+            <b>
+                @Html.LabelFor(m => m.customer_lname)
+                @Html.TextBoxFor(m => m.customer_lname, new { required = "required" })
+            </b>
+            <br>
+            <br>
+
+            <b>
+                @Html.LabelFor(m => m.customer_mobile)
+                @Html.TextBoxFor(m => m.customer_mobile, new { required = "required" })
+            </b>
+            <br>
+            <br>
+
+            <b>
+                @Html.LabelFor(m => m.customer_email)
+                @Html.TextBoxFor(m => m.customer_email, new { required = "required" })
+            </b>
+            <br>
+            <br>
+
+            <b>
+                @Html.LabelFor(m => m.customer_address)
+                @Html.TextBoxFor(m => m.customer_address, new { required = "required" })
+            </b>
+            <br>
+            <br>
+
+            <b>
+                @Html.LabelFor(m => m.account_no)
+                @Html.TextBoxFor(m => m.account_no, new { required = "required" })
+            </b>
+            <br>
+            <br>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.security_questions_Code, "Select Security Question:")
+                @Html.DropDownListFor(m => m.security_questions_Code, Model.GetSecurityQuestions, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.security_answer_code, "Security Answer:")
+                @Html.EditorFor(m => m.security_answer_code, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.login_password, "Password:")
+                @Html.PasswordFor(m => m.login_password, new { @class = "form-control", required = "required" })
+            </div>
+
+            <br>
+            <br>
+
+            <button type="submit">Submit</button>
+            <br>
+            <br>
+
+
+
+        </div>
+    }
+
+    <div class="center">
+        <a style="text-align:center" href="@Url.Action("Login","Backend")"><button>Back</button></a>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+

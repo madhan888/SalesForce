@@ -1,0 +1,62 @@
+﻿@model Trail.Models.ticket_master
+
+@{
+    ViewBag.Title = "TicketDetail";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Detail</title>
+</head>
+<body>
+
+    <h2>Ticket Details</h2>
+    <table>
+        <tr>
+            <td>Ticket No:</td>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <td>Status:</td>
+            <td>
+                <form method="post" action="@Url.Action("UpdateStatus", "Backend")">
+                    @Html.HiddenFor(m => m.Id) <!-- Hidden field to store the ticket ID -->
+                    <select name="StatusCode">
+                        <option value="Initiated" @(Model.StatusCode == "Initiated" ? "selected" : "")>Initiated</option>
+                        <option value="Unassigned" @(Model.StatusCode == "Unassigned" ? "selected" : "")>Unassigned</option>
+                        <option value="Assigned" @(Model.StatusCode == "Assigned" ? "selected" : "")>Assigned</option>
+                        <option value="Resolved" @(Model.StatusCode == "Resolved" ? "selected" : "")>Resolved</option>
+                        <option value="Closed" @(Model.StatusCode == "Closed" ? "selected" : "")>Closed</option>
+                        <option value="Reopened" @(Model.StatusCode == "Reopened" ? "selected" : "")>Reopened</option>
+                    </select>
+                    <input type="submit" value="Update Status" />
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Problem:</td>
+            <td>@Model.Problem</td>
+        </tr>
+        <tr>
+            <td>Resolution:</td>
+            <td>@Model.Resolution</td>
+        </tr>
+        <tr>
+            <td>Assigned To:</td>
+            <td>@Model.UserId</td>
+        </tr>
+        <tr>
+            <td>Created On:</td>
+            <td>@Model.CreatedOn</td>
+        </tr>
+        <tr>
+            <td>Resolved On:</td>
+            <td>@Model.ResolvedOn</td>
+        </tr>
+    </table>
+
+</body>
+</html>

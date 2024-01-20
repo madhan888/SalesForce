@@ -1,0 +1,110 @@
+﻿@model Trail.Models.ticket_master
+
+@{
+    ViewBag.Title = "TicketHistory";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        .hidden-info {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="header" onclick="toggleInfo('Initiated')">Initiated</th>
+                <th class="header" onclick="toggleInfo('Unassigned')">Unassigned</th>
+                <th class="header" onclick="toggleInfo('Assigned')">Assigned</th>
+                <th class="header" onclick="toggleInfo('Resolved')">Resolved</th>
+                <th class="header" onclick="toggleInfo('Closed')">Closed</th>
+                <th class="header" onclick="toggleInfo('Reopened')">Re-opened</th>
+            </tr>
+        </thead>
+        <tbody class="grid-item hidden-info">
+            <tr>
+                <td>Ticket No</td>
+                <td>Status</td>
+                <td>Problem</td>
+                <td>Resolution</td>
+                <td>Assigned To</td>
+                <td>Created On</td>
+                <td>Resolved On</td>
+                <td>Action</td>
+            </tr>
+
+            @{
+                foreach (var item in ViewBag.Initial)
+                {
+                    <tr data-statuscode="@item.StatusCode">
+                        <td>@item.Id</td>
+                        <td>@item.StatusCode</td>
+                        <td>@item.Problem</td>
+                        <td>@item.Resolution</td>
+                        <td>@item.UserId</td>
+                        <td>@item.CreatedOn</td>
+                        <td>@item.ResolvedOn</td>
+                        <td>
+                            <!-- Change the link to open TicketDetail.cshtml -->
+                            <a href="@Url.Action("TicketDetail", "Backend", new { id = item.Id })">View</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <script>
+        function toggleInfo(column) {
+            const selectedInfo = document.querySelector('.grid-item');
+
+            // Toggle the visibility based on the current state
+            if (selectedInfo.classList.contains('hidden-info')) {
+                // If hidden, show it
+                selectedInfo.classList.remove('hidden-info');
+                showRows(column);
+            } else {
+                // If visible, hide it
+                selectedInfo.classList.add('hidden-info');
+            }
+        }
+
+        function showRows(column) {
+            const rows = document.querySelectorAll('tbody.grid-item tr');
+
+            rows.forEach(row => {
+                const statusCode = row.getAttribute('data-statuscode');
+                if (statusCode === column) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none'; 
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+﻿@model Trail.Models.ticket_master
+
+@{
+    ViewBag.Title = "DashBoard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highcharts Bar Chart</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+        /* Add CSS styles for the cards */
+        #statusCards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .statusCard {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            box-sizing: border-box;
+            width: 30%;
+            background-color: #f1f1f1; /* A light background color */
+            border-radius: 5px; /* Add rounded corners */
+        }
+
+            /* Vibrant colors for the cards */
+            .statusCard:nth-child(1) {
+                background-color: #f44336; /* Red */
+            }
+
+            .statusCard:nth-child(2) {
+                background-color: #4CAF50; /* Green */
+            }
+
+            .statusCard:nth-child(3) {
+                background-color: #2196F3; /* Blue */
+            }
+
+            .statusCard:nth-child(4) {
+                background-color: #FFC107; /* Yellow */
+            }
+
+            .statusCard:nth-child(5) {
+                background-color: #FF5722; /* Orange */
+            }
+
+            .statusCard:nth-child(6) {
+                background-color: #9C27B0; /* Purple */
+            }
+
+            /* Add more styling as needed */
+            .statusCard h4 {
+                color: #333;
+            }
+
+            .statusCard p {
+                color: #555;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- Two buttons at the top -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="@Url.Action("RaiseTicket", "Backend")"><button>Raise Ticket</button></a>
+        <a href="@Url.Action("TicketHistory", "Backend")"><button>View Ticket History</button></a>
+        <a href="@Url.Action("Login", "Backend")"><button>Logout</button></a>
+    </div>
+
+    <h2>DashBoard</h2>
+
+    <h3>Highcharts Bar Chart</h3>
+
+    @if (ViewBag.StatusCounts != null)
+    {
+        <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+
+        <!-- Container for cards -->
+        <div id="statusCards"></div>
+    }
+
+    <script>
+        // Replace this with your actual data from the server
+        const statusCounts = @Html.Raw(Json.Encode(ViewBag.StatusCounts));
+
+        // Extract categories and data for Highcharts
+        const categories = statusCounts.map(sc => sc.StatusCode);
+        const data = statusCounts.map(sc => sc.Count);
+
+        // Configuration for the chart
+        const chartOptions = {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Status Counts'
+            },
+            xAxis: {
+                categories: categories,
+                title: {
+                    text: 'Status Codes'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Count'
+                },
+                min: 0
+            },
+            series: [{
+                name: 'Count',
+                data: data
+            }]
+        };
+
+        // Create the bar chart
+        const chartContainer = document.getElementById('chartContainer');
+        const myChart = Highcharts.chart(chartContainer, chartOptions);
+
+        // Generate cards based on statusCounts
+        const statusCardsContainer = document.getElementById('statusCards');
+        statusCounts.forEach((statusCount, index) => {
+            const cardHtml = `<div class="statusCard">
+                                 <h4>Status Code: ${statusCount.StatusCode}</h4>
+                                 <p>Count: ${statusCount.Count}</p>
+                             </div>`;
+            statusCardsContainer.innerHTML += cardHtml;
+        });
+    </script>
+
+</body>
+</html>

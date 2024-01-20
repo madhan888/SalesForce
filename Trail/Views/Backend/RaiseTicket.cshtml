@@ -1,0 +1,89 @@
+﻿@model Trail.Models.ticket_master
+
+@{
+    ViewBag.Title = "RaiseTicket";
+}
+
+<form method="post" action="@Url.Action("RaiseTicket", "Backend")">
+    <div style="text-align:center">
+        <h2>Raise Ticket</h2>
+
+        <h2>@ViewBag.SuccessMessage</h2>
+        <h2>@ViewBag.SuccessMessageTwo</h2>
+        <h2>@ViewBag.SuccessMessageThree</h2>
+
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @onclick = "handleTextBoxClick('Name')" })
+        </div>
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @onclick = "handleTextBoxClick('Email')" })
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Mobile)
+            @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @onclick = "handleTextBoxClick('Mobile')" })
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Problem)
+            @Html.TextBoxFor(m => m.Problem, new { @class = "form-control", @onclick = "handleTextBoxClick('Problem')" })
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @onclick = "handleTextBoxClick('Description')" })
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.StatusCode)
+            @Html.DropDownListFor(m => m.StatusCode, new SelectList(
+                new[]
+                {
+                    new { Value = "Initiated", Text = "Initiated" },
+                    new { Value = "Unassigned", Text = "Unassigned" },
+                    new { Value = "Assigned", Text = "Assigned" },
+                    new { Value = "Resolved", Text = "Resolved" },
+                    new { Value = "Closed", Text = "Closed" },
+                    new { Value = "Reopened", Text = "Reopened" }
+                },
+                "Value",
+                "Text"
+            ), new { @class = "form-control" })
+        </div>
+
+        <!-- Add the required fields -->
+        <div class="form-group">
+            @Html.HiddenFor(m => m.CreatedOn) <!-- Assuming CreatedOn is automatically set in the controller -->
+            @Html.HiddenFor(m => m.UpdatedOn) <!-- Assuming UpdatedOn is automatically set in the controller -->
+            @Html.HiddenFor(m => m.UserId) <!-- Assuming UserId is automatically set in the controller -->
+        </div>
+
+        <br />
+
+        <!-- Add the submit button here -->
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<script>
+    var ticketData = {};
+
+    function handleTextBoxClick(textboxId) {
+        ticketData[textboxId] = document.getElementById(textboxId).value;
+    }
+</script>
